@@ -1,0 +1,3 @@
+{% asset_img xxx [title] %}
+
+![xxx](xxx/xxx.jpg)
