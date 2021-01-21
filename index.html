@@ -130,7 +130,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 
 
 
-    			总文章数 15
+    			总文章数 16
 
 <div id="hitokoto"style="font-size:16px;color:red;">:D 获取中...</div>
 <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
@@ -224,6 +224,178 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-学习报告/寒假第一周学习总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/21/%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">寒假第一周学习总结</a>
+    </h1>
+  
+
+<!--显示阅读次数-->
+
+<!--显示阅读次数完毕-->
+        
+        <a href="/2021/01/21/%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" class="archive-article-date">
+  	<time datetime="2021-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-21</time>
+</a>
+        <!-- 需要添加的位置 -->
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">942字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">3分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>@<a href="%E7%9B%AE%E5%BD%95">TOC</a></p>
+<h2 id="计算机语言"><a href="#计算机语言" class="headerlink" title="计算机语言"></a>计算机语言</h2><h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><ol>
+<li><p>字典 (内部由‘键’和‘值’组成，可包含列表)</p>
+</li>
+<li><p>字典.keys(),.values()函数来遍历字典</p>
+</li>
+<li><p>集合与字典都用花括号{ }定义，但集合没有‘值’</p>
+</li>
+<li><p>while循环—&gt;   while 某一条件:</p>
+</li>
+<li><p>了解了一些爬虫知识</p>
+<h3 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h3><p>这周主要学了汇编的前五章</p>
+</li>
+<li><p>计算机中用二进制来表示指令和数据，指令和数据本质上无任何区别</p>
+</li>
+<li><p>CPU要进行数据读写需要3种信息（地址信息，控制信息，数据信息）</p>
+</li>
+<li><p>由于8086操作系统有20根地址总线（寻址能力最大为2^20^,5位十六进制数最大为FFFFFH）<br>而只有16根数据总线，表示数字最多为2^16^,4位十六进制数<br>所以用两个数据表示物理地址，规定有一个段寄存器存段地址，一个寄存器存偏移地址</p>
+</li>
+<li><p>指向的物理地址 = 段地址X16(十六进制左移一位)+偏移地址（基础地址）</p>
+</li>
+<li><p>cs,ds,es,ss为段寄存器，存储段地址<br>ip,sp为寄存器，存储偏移地址</p>
+</li>
+<li><p>cs:ip—&gt;当前将要执行的指令（机器码作指令用）<br>ds:[某寄存器或偏移地址]—&gt;内存中数据（机器码作数据用）<br>ss:sp—&gt;栈顶（sp=栈中最高空位地址+1）（pop后的位置当空位置）</p>
+</li>
+<li><p> 栈的操作<br>push———sp-2<br>pop ———sp+2</p>
+</li>
+</ol>
+<ul>
+<li>由于当栈空时sp位于栈外，所以c++&lt;stack&gt;函数.top()不能在栈空时使用</li>
+</ul>
+<ol start="8">
+<li>由于偏移地址最大为FFFFH，所以栈最大为64KB，并且此时sp为0000H，并且栈满时也为0000H</li>
+<li>程序加载到内存中时<br>PSP区（数据区）：SA ：0<br>程序区（指令区）：SA+10H ：0</li>
+<li>loop循环指令 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　   mov cx,10H</span><br><span class="line">s:     mov ax,bx</span><br><span class="line">　　   loop s       &#x2F;&#x2F;s总共执行16次其中loop循环了15次</span><br></pre></td></tr></table></figure>
+只要cx不为0，jmp到s所在地址<h4 id="debug的基础指令"><a href="#debug的基础指令" class="headerlink" title="debug的基础指令"></a>debug的基础指令</h4></li>
+</ol>
+<p>-a 用来写入汇编文本<br>-r 用来查看寄存器内容或改变寄存器内容<br>-t 单步跟踪<br>-u 查看cs:ip指向的汇编命令及机器码<br>-e 改写内存中的数据<br>-g 地址 在exe运行时直接运行到指定地址<br>-p 自动执行循环直到结束<br>-d 查看内存中的数据</p>
+<ul>
+<li>eg:</li>
+<li>d ds:[0] [10]  ———————————查看从ds:0到ds:10的数据</li>
+<li>d 段地址:偏移地址a  偏移地址b———查看从ds:[a]到ds:[b]的数据<br>不输入b的话会自动显示后面的内存数据<h4 id="汇编程序exe的形成"><a href="#汇编程序exe的形成" class="headerlink" title="汇编程序exe的形成"></a>汇编程序exe的形成</h4></li>
+</ul>
+<ol>
+<li>编译—-&gt;形成.obj文件<br>masm 1.asm;</li>
+<li>连接—-&gt;形成.exe文件<br>link 1.asm;</li>
+</ol>
+<ul>
+<li>注意masm的使用需要挂载<br>mount c: d:/masm(ASM)</li>
+</ul>
+<h2 id="CTF"><a href="#CTF" class="headerlink" title="CTF"></a>CTF</h2><p>这周主要学了汇编，重新装了系统，虚拟机，学会了科学上网，做题较少<br>还有一个脱壳原理</p>
+<ul>
+<li>pushad  popad中间的过程其实就是一个解压缩的过程，所以再往下找到一个跳转较大的jmp指令，其后的地址即为程序入口，用od进入即脱壳完成<h2 id="ACM"><a href="#ACM" class="headerlink" title="ACM"></a>ACM</h2>主要学了前缀和，差分，二分，深度优先搜索</li>
+</ul>
+<ol>
+<li>前缀和(画图理解)—————————–s[]为前缀和数组<br>一维：a[i]=s[i]-s[i-1]<br>二维：s[i][j]=s[i-1][j]+s[i][j-1]-s[i-1][j-1]+a[i][j]</li>
+<li>差分 （可以看作前缀和的逆过程）——d[]为差分数组<br>一维：d[i]=a[i]-a[i-1]<br>二维：d[i][j]=a[i][j]-a[i-1][j]-a[i][j-1]+a[i-1][j-1]</li>
+<li>二分 不好描述。。。</li>
+<li>dfs近似等价于递归<br>加上回溯后可以遍历所有可能情况（有时不进行回溯实质上是剪枝操作，将回溯的情况直接剪掉，节约时间）</li>
+</ol>
+
+      
+
+
+
+
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/21/%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-信息学奥赛一本通/递推算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1073,11 +1245,15 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习报告</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习总结</a>
         		</li>
       		
 		</ul>
@@ -1202,116 +1378,6 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/11/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20reverse%20%E7%AC%AC%E4%B8%80%E5%91%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-leetcode/leetcode 简单难度 罗马数字转整数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/">leetcode 罗马数字转整数</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">671字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">3分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>按规则一步一步判断即可</p>
-        
-          <a class="article-more-a" href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/#more">more >></a>
-        
-      
-
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/">展开全文 >></a>
         </p>
       
 
@@ -1518,6 +1584,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">reverse</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习总结</a>
               </li>
             
             <div class="clearfix"></div>
