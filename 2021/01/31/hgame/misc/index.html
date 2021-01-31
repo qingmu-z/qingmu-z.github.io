@@ -6,20 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://qingmu-z.github.io">
-  <title>leetcode 整数反转 | 清霂qingmu-z</title>
+  <title>hgame misc | 清霂qingmu-z</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="思路由题目描述先记录一下正负号，把数字都变为正数，再用取余运算，将数字倒过来就行了。">
+  <meta name="description" content="hgame pwn wp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 整数反转">
-<meta property="og:url" content="https://qingmu-z.github.io/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/index.html">
+<meta property="og:title" content="hgame misc">
+<meta property="og:url" content="https://qingmu-z.github.io/2021/01/31/hgame/misc/index.html">
 <meta property="og:site_name" content="清霂qingmu-z">
-<meta property="og:description" content="思路由题目描述先记录一下正负号，把数字都变为正数，再用取余运算，将数字倒过来就行了。">
+<meta property="og:description" content="hgame pwn wp">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-01-21T09:32:21.151Z">
+<meta property="article:published_time" content="2021-01-31T14:05:44.362Z">
+<meta property="article:modified_time" content="2021-01-31T14:08:08.436Z">
 <meta property="article:author" content="朱登榜">
-<meta property="article:tag" content="acm">
-<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="hgame">
+<meta property="article:tag" content="misc">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="清霂qingmu-z" type="application/atom+xml">
@@ -227,14 +228,14 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-leetcode/leetcod 简单难度 整数反转" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-hgame/misc" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      leetcode 整数反转
+      hgame misc
     </h1>
   
 
@@ -250,8 +251,8 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 
 <!--显示阅读次数完毕-->
         
-        <a href="/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
+        <a href="/2021/01/31/hgame/misc/" class="archive-article-date">
+  	<time datetime="2021-01-31T14:05:44.362Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-31</time>
 </a>
         <!-- 需要添加的位置 -->
         <!-- 开始添加字数统计-->
@@ -261,7 +262,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">584字</span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">7字</span>
       </span>
     </span>
 
@@ -270,7 +271,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">2分</span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">1分</span>
       </span>
     </span>
 </div>
@@ -281,24 +282,15 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>思路<br>由题目描述先记录一下正负号，把数字都变为正数，再用取余运算，将数字倒过来就行了。</p>
-<a id="more"></a>
-<p>@<a href="%E7%9B%AE%E5%BD%95">TOC</a></p>
-<h1 id="1-题目"><a href="#1-题目" class="headerlink" title="1.题目"></a>1.题目</h1><p>给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。</p>
-<p>示例 1:</p>
-<p>输入: 123<br>输出: 321<br> 示例 2:</p>
-<p>输入: -123<br>输出: -321<br>示例 3:</p>
-<p>输入: 120<br>输出: 21<br>注意:</p>
-<p>假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。<br>##数据范围为（-2的31次方）到（2的31次方-1）</p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-integer">https://leetcode-cn.com/problems/reverse-integer</a></p>
-<h1 id="2-思路"><a href="#2-思路" class="headerlink" title="2.思路"></a>2.思路</h1><p>由题目描述先记录一下正负号，把数字都变为正数，再用取余运算，将数字倒过来就行了。</p>
-<h1 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    long long reverse(long long x) &#123;</span><br><span class="line">        bool symbol&#x3D;0;                           &#x2F;&#x2F;标记正负号，正数为0，负数为1。</span><br><span class="line">        long long top&#x3D;2147483648-1;              &#x2F;&#x2F;数据范围最大值top或者直接INT_MAX</span><br><span class="line">        if(x&lt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            symbol&#x3D;1;</span><br><span class="line">            x&#x3D;-x;</span><br><span class="line">            top++;                               &#x2F;&#x2F;负数最大值top要+1（与输入数字的绝对值比，所以只需+1即可）</span><br><span class="line">        &#125;</span><br><span class="line">        long long target&#x3D;0;                      &#x2F;&#x2F;反转后的整数</span><br><span class="line">        long long n&#x3D;x;							 </span><br><span class="line">        int len&#x3D;0;</span><br><span class="line">        for(;n!&#x3D;0;n&#x3D;n&#x2F;10)</span><br><span class="line">        &#123;</span><br><span class="line">            len++;                               &#x2F;&#x2F;整数的长度</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            target&#x3D;target*10+x%10;				 </span><br><span class="line">            x&#x2F;&#x3D;10;</span><br><span class="line">        &#125;</span><br><span class="line">        if(target&gt;top)</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;                            &#x2F;&#x2F;超出范围返回0</span><br><span class="line">        &#125;</span><br><span class="line">        else </span><br><span class="line">        &#123;</span><br><span class="line">            if(symbol&#x3D;&#x3D;1)</span><br><span class="line">            target&#x3D;-target;                      &#x2F;&#x2F;变回负数</span><br><span class="line">            return target;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="4-其他细节"><a href="#4-其他细节" class="headerlink" title="4.其他细节"></a>4.其他细节</h1><p>一.符号<br>一开始想判断完符号，如果是负数直接输出负号，试了一次发现leetcode上将stdout(cin cout)输出的东西和return的值分开了，所以必须将最后的值变为负数，不能把符号和数分开，一起返回才行。</p>
-<p>二.数据溢出</p>
-<p>因为int型数据范围为（-2的31次方）到（2的31次方-1）-2147483648～+2147483647</p>
-<p>如果是输入int型最大值2147483647，反转后为7463847412超过了int能表示的最大值，所以不能用int型，</p>
-<p>long long型为（-2的63次方）到（2的63次方-1）-9223372036854775808～+9223372036854775807，所以用long long型就不会溢出了。</p>
-
+        <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">比赛结束开放</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="70b6665e6012ae57a61e49b221f17d0ee6beb766ef14ed2171244773096515b3">36b6d379c8230e0908b623b035ec1bf3c3f790bf1b3d57da19677accbd2d1b9e2220fed8021202994015ecf0365fbbc2f66cb93f5b01c27085040911b948db43e3830842b848dac3960a7485bcebb798c89b1308259e36334fa5935629bae9fe9320a7bd2cb3556ecc2f9ae31af59b115162be7661fc16b35273d1a20724fa27f67f0f48c5b50f9ee5be2fe222d66145fe919197708278b08632d6fb254300bed8624b45e92b4507d6c622c9e3381927368ba9e5c4a1a9c6efdc3d98a6d1b774e38651807b63e6feaf0045615383c87d8265fa1151f608b32329ceaf0571cb0214319f4f14e4b6440d9ca5cd001a6e20ab6b4a28543813ac169d060d7311b9e1dd283669699b674280be47b2eb55ac1f196703f8b584c0bc559d472efcc5abc88e07748aa733bcaa6989dba8f27511b70028f53cfeae3a4789d552c6ee25c7e2da3d61660a338e2e629f1509fc1b3f6f09778848818fdb1255194a5daa0a62ff47ec710ac0047b988b2d5489a82ab6d07f718066aec61ac67b944ea6e06010db815f185723ab2595370f0c86eb901b27698688b11ffd3f81b0190420aae016a2006f980b5e4b0f3d62d8d042a45946cb245da8a0f643fd0700b6ef71e55777734178e83f3e4d05f4f71b8bccd3b629088794d05da42568f1e32d3fe41c9aed117cd2a9b6a2935d4302d9b96b40e2a44b0964d095fe39b30b5c2acd6928fb815461c29bc9a9dc19548f783c0ad4f6e51fd0d2b5513f5357d2413b4630b3b12a0dfd7df69d4c649cec9db90af2628a2816220eb151bc2abfbebbbf7bbae7fc323cc650a86082b1a5ff551af608cfb0d4f52fb87f40b3aebbacfe2f17bff7c5bfc23187f394256034aa8cc3e93719f66fb13cf4299af360177eefe0f494e61ba3e6464c7a1ed4fd1a8d84d555ac17c42935245fbba1e5d4e1d98b5b1fa37e5ff30979cd37e0a8b53d007beea71e681d7a682581f18c7a38507b9acee1ce7667547fd46f85c4fbcecbfb7ec3d0d171abb5e65c1195189fdbf63f3706e9875f786de433c9b639f65fedfab405e60d9f5e17791022264683b16b5e4d68f938e4797b623fc7123cebf1fda77d385de0e8b6d003a6d54d9e97df475d8f5365b7794d8743f56ce5e260d45f7a2d6685c4e38cd07d6b271030ccc6d4d13fc30e4622445e2a382a7580686877496c266bba7adf54d81d79d60272a46905aa27b45049f7db15f5fec0117da87dc1f34f7c5b49d698f4e31ee20d26fed3a617668ce381122c19858cc4f201ea154aa815d19c9490226a26d44c2ab934c0dbc74d041a244e0b997a4ea5b5524a95ff8ed5190527d13fec2d0dec4c7bd6de54034c8fa6d42a2d7388a9ec4bfc249b3340f40ad9e184b0d21c15027f73a3facdc06da7aa131c21c3a63fe8fa31b4bbba6543a28b60d0a14766d9beafaf4eaf4c779ce1139bfa2b6204c2c670fd62376d0b3a337572037bd8f8fbcebe3d6e4607e0df04746dce74751bdd07833bfa97a55f4022e9080d2dd0ec5268806c500f992b884f6c5ce19623dcec097a5ca8a305f88ae0614817ab78d251264d2df444de5fbc00dec9831fc1068bbef20570fccd8a99befd6f1f7c62be171d9da0f2219c8a386a132837321804eed4973940f5ba537e8a082d750e9cc26a9a66382d5c9301601ad8dd5c2ce379a577b6c3d7b1fad6f6b3898000732c68fc52a96b3669aecddbdb7249c6e68cd0da08dc2f50f77efe1bdd460235fbbd5d1614304f091c972efc5c93828f52864cc86d737742fc257f1bc41f22eb50af2cb77bcac13ae4c74d587d6b7702cdf3228c93be68bb30bdf9e88c36204392b291c228504e8fc3508f41b6de726857ec6e31386a9eb393e7b1976f7b5e91fbdf1322086ed757c27cdcb7d693b004d26a3261fb822486028c3527791bbd27da06f4ce9836c5ad7ed309e0246f775553eee23abbc39fccc075b5d4d11df40f53f10d778ad99b7db9664db51af4c213deb342d8d2520c364f7dc1bbabcbc839c21b1fb9bff641b4eb757988c12eb57f84904f98d0c06bea32de61909ca7d6ff6693bb8e708dfb52d474f0c9929ce461e2cdd52ad7487348bbf66f9694137a4a892e6321d72ccc05fc47e04cf8159d3720b4759aa206ab318e75ab02b1c9518e2725eed5e9b3e10104ae5d3171bece4fb91bdb68e92721df08c2166c5e1ec73c38e69cb18742c9f6654337b9eb23ae1f08bada03995d67eb4d4bf75176c551ed500474d48228eccf17a189ac6dba785ac5f0d0bba92bacb416fd00ff2b51fcf93f0c7eed94c64a6c08093256157b826abf8243718cc6bb0ba0ee6be30d1fb6a855ed16e1b0cf2c6cf63cb395e2f7a1b4e20780ccdb8b7832c575710fa3ea7a640ac8057539826343d7049ac98ecf43c8384c37107539c19df991aad77f6539ce39c152de753b72daecdb76273006873d879f55514d65fb0c233c5a6bc11b7fa1bfcfaf68d3c75d464b4e3456e0186984576043c21a007a449d2eaf0cfc0471c5b630</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
       
 
 
@@ -353,11 +345,15 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">hgame</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">misc</a>
         		</li>
       		
 		</ul>
@@ -413,7 +409,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://qingmu-z.github.io/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://qingmu-z.github.io/2021/01/31/hgame/misc/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -427,15 +423,11 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
   
 <nav id="article-nav">
   
-    <a href="/2020/11/20/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E5%9B%9E%E6%96%87%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          leetcode 回文数
-        
-      </div>
-    </a>
   
+    <a href="/2021/01/31/hgame/pwn/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hgame pwn</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -460,7 +452,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E9%A2%98%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">1.题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">2.思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">3.代码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E7%BB%86%E8%8A%82"><span class="toc-number">4.</span> <span class="toc-text">4.其他细节</span></a></li></ol>
+                    木有目录啊…
                     </div>
                 </span>
             </div>
